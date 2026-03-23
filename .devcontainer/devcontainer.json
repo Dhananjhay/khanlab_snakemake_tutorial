@@ -8,7 +8,10 @@
 	// instead of the build to use a pre-built image.
 	"build": {
         "context": "..",
-        "dockerfile": "../Dockerfile"
+        "dockerfile": "../Dockerfile",
+        "args": {
+            "CACHE_BUST": "d2e6ae3424a2558e385bbb22c0e281a1"
+        }
     },
 	"remoteEnv": {
         "PATH": "/opt/conda/bin:${containerEnv:PATH}"
