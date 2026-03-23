@@ -1,30 +1,39 @@
-# 1. Define your subjects based on your GitHub folder names
-# In a real tutorial, you'd show how SnakeBIDS automates this!
-SUBJECTS = ["01", "02", "03"]
+import os
+os.environ["FSLOUTPUTTYPE"] = "NIFTI_GZ"
 
-# 2. The Target Rule (The "Order" at the Restaurant)
-# This rule tells Snakemake exactly what files we want at the very end.
+SUBJECTS = ["sub-01", "sub-02", "sub-03"]
+TEMPLATE = "resources/mni152.nii.gz"
+
+# STEP 7: Adding a target rule
+# We want to ensure EVERY subject gets a 'mean.txt' file
 rule all:
     input:
-        expand("qc/{subject}_report.txt", subject=SUBJECTS)
+        expand("stats/{subject}_mean.txt", subject=SUBJECTS)
 
-# 3. Rule: Brain Extraction (The "Ingredient")
-# We use a wildcard {subject} so this 1 rule handles everyone.
-rule brain_extract:
+# STEP 1 & 2: Mapping & Generalizing
+rule align_to_standard:
     input:
-        "data/sub-{subject}/anat/sub-{subject}_T1w.nii.gz"
+        src = "data/{subject}/anat/{subject}_T1w.nii.gz",
+        ref = TEMPLATE
     output:
-        "proc/{subject}_brain.nii.gz"
+        "proc/{subject}_std.nii.gz"
     shell:
-        # We use 'touch' to simulate the process for the tutorial
-        "echo 'Extracting brain from {input}...' && touch {output}"
+        "flirt -in {input.src} -ref {input.ref} -out {output}"
 
-# 4. Rule: Quality Control (The "Plating")
-# This rule 'chains' to the one above by asking for its output as input.
-rule generate_qc:
+# STEP 3: Sorting (Thresholding)
+rule clean_image:
     input:
-        "proc/{subject}_brain.nii.gz"
+        "proc/{subject}_std.nii.gz"
     output:
-        "qc/{subject}_report.txt"
+        "proc/{subject}_clean.nii.gz"
     shell:
-        "echo 'QC Report for {wildcards.subject}: Brain extraction successful.' > {output}"
+        "fslmaths {input} -thr 20 {output}"
+
+# STEP 4: Indexing / Stats
+rule get_stats:
+    input:
+        "proc/{subject}_clean.nii.gz"
+    output:
+        "stats/{subject}_mean.txt"
+    shell:
+        "fslstats {input} -M > {output}"
