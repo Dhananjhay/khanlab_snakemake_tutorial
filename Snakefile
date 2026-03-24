@@ -4,7 +4,7 @@ os.environ["FSLOUTPUTTYPE"] = "NIFTI_GZ"
 SUBJECTS = ["sub-01", "sub-02", "sub-03"]
 TEMPLATE = "resources/mni152.nii.gz"
 
-# STEP 7: Adding a target rule
+# STEP 5: Adding a target rule
 # We want to ensure EVERY subject gets a 'mean.txt' file
 rule all:
     input:
