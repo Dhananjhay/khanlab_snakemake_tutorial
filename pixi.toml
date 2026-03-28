@@ -1,7 +1,7 @@
-[project]
+[workspace]
 name = "brainhack-snakemake"
-channels = ["conda-forge", "bioconda", "https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/public"]
 platforms = ["linux-64", "osx-64", "osx-arm64"]
+channels = ["conda-forge", "bioconda", "https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/public"]
 
 [dependencies]
 python = "3.11.*"
