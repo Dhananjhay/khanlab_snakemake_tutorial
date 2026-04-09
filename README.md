@@ -1,16 +1,26 @@
 # 🧠 Snakemake for Neuroimaging
 **A Khan Lab Brainhack Tutorial**
 
-This workshop introduces you to building reproducible neuroimaging pipelines. We will use **Snakemake** (the workflow conductor), **Pixi** (the environment manager), and **FSL** (the image processing toolkit).
+This workshop introduces you to building reproducible neuroimaging pipelines. We will use **Snakemake** to orchestrate a workflow that performs image resampling, thresholding, and statistical extraction using **Nilearn** and **Nibabel**.
 
 ---
 
 ## 🚀 Quick Start: Environment Setup
 
 ### 1. Install Pixi
-Open your terminal and run:
+
+Choose the command for your operating system:
+
+**macOS / Linux / WSL2**:
+
 ```bash
 curl -fsSL https://pixi.sh/install.sh | bash
+```
+
+**Windows**
+
+```bash
+powershell -ExecutionPolicy Bypass -c "irm -useb https://pixi.sh/install.ps1 | iex"
 ```
 
 ### 2. Clone this Tutorial
