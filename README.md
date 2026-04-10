@@ -7,7 +7,7 @@ This workshop introduces you to building reproducible neuroimaging pipelines. We
 
 ## 🚀 Quick Start: Environment Setup
 
-### 1. Install Pixi
+### 1. Install [Pixi](https://pixi.prefix.dev/latest/installation/)
 
 Choose the command for your operating system:
 
